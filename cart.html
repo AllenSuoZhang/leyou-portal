@@ -92,7 +92,7 @@
                         <span><em>已节省：</em><i>¥0.00</i></span>
                     </div>
                     <div class="sumbtn">
-                        <a class="sum-btn"  href="getOrderInfo.html"  target="_blank">结算</a>
+                        <a class="sum-btn"  href="#" @click="toOrder()">结算</a>
                     </div>
                 </div>
             </div>
@@ -302,6 +302,16 @@
           }
         },
         methods: {
+            toOrder(){
+                ly.verify().then(() => {
+                    // 已登录
+                    ly.store.set("LY_SELECTED", this.selected);
+                    window.location = "http://www.leyou.cn/getOrderInfo.html"
+                }).catch(() => {
+                    // 未登录
+                    window.location.href = "/login.html?returnUrl=" + window.location.href;
+                })
+            },
             incr(cart){
                 cart.num++;
                 ly.verify().then(() => {
